@@ -106,7 +106,7 @@ def eta(first_stop, second_stop, route_map):
     '''ETA.
     25 points.
 
-    A shuttle van service is tasked to travel along a predefined circlar route.
+    A shuttle van service is tasked to travel along a predefined circular route.
     This route is divided into several legs between stops.
     The route is one-way only, and it is fully connected to itself.
 
@@ -131,17 +131,16 @@ def eta(first_stop, second_stop, route_map):
     int
         the time it will take the shuttle to travel from first_stop to second_stop
     '''
-    # Replace `pass` with your code.
-    # Stay within the function. Only use the parameters as input. The function should return your answer.
     
-    size = len(board)
-    for i in range(size):
-        if all(board[i][0] == board[i][j] != '' for j in range(size)):
-            return board[i][0]
-        if all(board[0][i] == board[j][i] != '' for j in range(size)):
-            return board[0][i]
-    if all(board[0][0] == board[i][i] != '' for i in range(size)):
-        return board[0][0]
-    if all(board[0][size-1] == board[i][size-1-i] != '' for i in range(size)):
-        return board[0][size-1]
-    return "NO WINNER"
+    current_stop = first_stop
+    total_travel_time = 0
+    
+    while current_stop != second_stop:
+        for (start, end), time_info in route_map.items():
+            if start == current_stop:
+                total_travel_time += time_info['travel_time_mins']
+                current_stop = end
+                break  
+
+    return total_travel_time
+
