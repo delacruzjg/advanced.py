@@ -83,18 +83,24 @@ def tic_tac_toe(board):
     str
         the symbol of the winner, or "NO WINNER" if there is no winner
     '''
-    # Replace `pass` with your code.
-    # Stay within the function. Only use the parameters as input. The function should return your answer.
-    
-    total_travel_time = 0
-    current_stop = first_stop
-    while current_stop != second_stop:
-        for (start, end), time_info in route_map.items():
-            if start == current_stop:
-                total_travel_time += time_info['travel_time_mins']
-                current_stop = end
-                break
-    return total_travel_time
+    size = len(board)
+   
+    for row in board:
+        if all(cell == row[0] and cell != '' for cell in row):
+            return row[0]
+   
+    for col in range(size):
+        if all(board[row][col] == board[0][col] and board[row][col] != '' for row in range(size)):
+            return board[0][col]
+
+    if all(board[i][i] == board[0][0] and board[i][i] != '' for i in range(size)):
+        return board[0][0]
+
+    if all(board[i][size - 1 - i] == board[0][size - 1] and board[i][size - 1 - i] != '' for i in range(size)):
+        return board[0][size - 1]
+        
+    return "NO WINNER"
+
 
 def eta(first_stop, second_stop, route_map):
     '''ETA.
